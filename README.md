@@ -1,2 +1,2 @@
 # Tareas_MPA
- Tareas de proba
+ Tareas de la clase Modelos Probabilistas Aplicados
