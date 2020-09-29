@@ -65,7 +65,7 @@
 
 \section{Introducción}
 
-En este trabajo se presenta un acercamiento a la simulación de variables aleatorias de Poisson a partir de variables aleatorias de distribución Uniforme, Exponencial y Normal. Además se presenta la aproximación de la distribución de Poisson a la distribución Binomial que seguían los largos de palabras de libro ``The Adventures of Sherlock Holmes" \cite{Holmes92}. Este libro se encuentra disponible en la biblioteca virtual gratuita Project Gutenberg, con el siguiente enlace: \href{https://www.gutenberg.org}{https://www.gutenberg.org}. 
+En este trabajo se presenta un acercamiento a la simulación de variables aleatorias de Poisson a partir de variables aleatorias de distribución Uniforme, Exponencial y Normal. 
 
 \section{Proceso de Poisson}
 
@@ -148,6 +148,38 @@ Para calcular la diferencia entre las distribuciones se realiza el cálculo de l
 \end{figure}
 \end{center}
  Para concluir si ambas poblaciones viene de una misma distribución se procede a aplicar la prueba de Cucconi, que es una prueba no paramétrica para comparar conjuntamente la tendencia central y la variabilidad (detectando cambios de ubicación y escala) en dos muestras. Lo s resultados son para el estadístico $C = 12.287$ y $p-valor = 0$, se rechaza la hipótesis nula que ambas poblaciones viene de una misma distribución.
+ 
+ \subsection{Aproximación mediante el distribución normal}
+
+A continuación realizaremos una comparación entre las variables aleatorias de Poisson creadas a partir de la biblioteca \textit{rnorm} y las creadas a partir de la biblioteca \textit{rpois}.
+
+En la figura \ref{fig:7} de la página \pageref{fig:7} se muestra los histogramas de las dos poblaciones simuladas. En la figura \ref{fig:8} de la página \pageref{fig:8}, se muestran superpuestos los diagramas de densidad de ambas poblaciones 
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.65]{figuras/AproxNr30.png}
+\caption{Histogramas de las poblaciones simuladas, a la izquierda la aproximación a partir de la Normal y a la derecha la creada a partir de la biblioteca \textit{rpois}}
+\label{fig:7}
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.6]{figuras/densidadPN.png}
+\caption{Diagramas de densidad de ambas poblaciones}
+\label{fig:8}
+\end{figure}
+\end{center}
+Para calcular la diferencia entre las distribuciones se realiza el cálculo de la distancia Kolmogorov–--Smirnov, que se define como la distancia vertical máxima entre las funciones de distribución acumulada empíricas de dos muestras, donde el valor de la distancia es $0.069$. Esto se puede observar en la figura \ref{fig:9} de la página \pageref{fig:9}.
+
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.6]{figuras/distanciaKolmPN.png}
+\caption{Distancia de Kolmogorov–--Smirnov entre ambas poblaciones}
+\label{fig:9}
+\end{figure}
+\end{center}
+ Para concluir si ambas poblaciones viene de una misma distribución se procede a aplicar la prueba de Cucconi, que es una prueba no paramétrica para comparar conjuntamente la tendencia central y la variabilidad (detectando cambios de ubicación y escala) en dos muestras. Lo s resultados son para el estadístico $C = 0.106$ y $p-valor = 0.891$, se acepta la hipótesis nula que ambas poblaciones viene de una misma distribución.
 
 
 El código general se encuentra disponible en el repositorio \href{https://github.com/Albertomnoa/Tareas_MPA/tree/master/Tarea3}{https://github.com/Albertomnoa/Tareas} 
