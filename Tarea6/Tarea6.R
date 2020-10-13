@@ -181,4 +181,4 @@ ggplot(comp, aes(x=comp$Tipo, y=comp$Valor )) +
 dev.off()
 dfan=read.csv("Agua.csv")
 chisq.test(dfan$Periodo,dfan$Valor)
-cor.test(data$Petr_p, data$Otras_C)
+plot(data$Petr_p, data$Otras_C)
