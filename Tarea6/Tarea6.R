@@ -171,7 +171,7 @@ comp=rbind(dfo,dfp)
 
 wilcox.test(data$Petr_p,data$Otras_C,alternative = "g")
 png(filename = "WilDoble.png",width = 2000, height = 1600, res =200)
-ggplot(comp, aes(x=comp$Tipo, y=comp$Valor )) +
+plot(comp)+
   geom_boxplot( colour="black", fill="#5bd47f" )+
   theme_bw()+theme(axis.text.y = element_text( vjust=0.6))+
   scale_y_continuous(labels=function(n){format(n, scientific = FALSE)})+ ylab("Valores de producción")+
