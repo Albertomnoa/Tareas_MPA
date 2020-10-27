@@ -1,0 +1,225 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage[margin=3cm,twoside]{geometry} 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\renewcommand{\theenumi}{\roman{enumi}}
+\newtheorem{teor}{Teorema}
+\makeatother
+\title{Tarea 8 de Modelos Probabilistas Aplicados}
+\subtitle{Aplicación del teorema de Bayes en datos relacionados con el Covid-19}
+
+\author{5271}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+
+En este trabajo se realiza un acercamiento a uno de los temas más relevantes de la actualidad, la pandemia del Covid-19. En el mismo se realiza un análisis sobre artículos que emplean el teorema de Bayes en datos de las pruebas diagnostico realizadas en la detención de la enfermedad, teniendo en cuenta la sensibilidad, especificidad y valores predictivos (positivos, negativos) de las pruebas. Además se presenta el cálculo de los valores predictivos (positivos, negativos) con datos abiertos sobre la aplicación de pruebas de Covid-19 en México.    
+
+\section{Teorema de Bayes}
+Sea $B_{1},B_{2},...,B_{n}$ una partición del espacio muestral $(\Omega)$ tal que $P(B_{i})\neq 0$ para $i=1,2,...,n$ y sea $A$ un evento tal que $P(A)\neq 0$. Entonces para cada $j=1,2,...,n$ se tiene:
+\begin{equation} \label{eq:bayes}
+P(B_j \mid A) = \frac{P(A \mid B_j)P(B_j) }{\sum_{i = 1}^n P(A \mid B_i)P(B_i) }.
+\end{equation}
+\section{Sensibilidad y especificidad de una prueba diagnostico}
+En esta sección se explicarán dos conceptos básicos a tener en cuenta en el análisis de una prueba diagnóstico, como son la sensibilidad y la especificidad.
+
+La sensibilidad representa la probabilidad de que una persona enferma obtenga un resultado positivo. Esta se define como:
+\begin{itemize}
+    \item $Sensibilidad: = \frac{VP}{VP+FN}$
+    
+ $VP$ (verdaderos positivos) y $FN$ (falsos negativos).
+\end{itemize}
+La especificidad representa la probabilidad de que una persona sana obtenga un resultado negativo. Esta se define como:
+\begin{itemize}
+    \item $Especificidad: = \frac{VN}{VN+FP}$
+    
+     $VP$ (verdaderos negativos) y $FN$ (falsos positivos).
+\end{itemize}
+ 
+A partir de estos conceptos se puede crear una matriz de confusión donde se reflejen los cuatro posibles resultados de un experimento a partir de $P$ instancias positivas y $N$ instancias negativas. Esta matriz se puede observar en el cuadro \ref{tab:mtrizconf} de la página \pageref{tab:mtrizconf}.
+
+
+\begin{table}
+  \centering
+  \caption{Matriz de confusión con posibles resultados de una prueba diagnostico}
+    \begin{tabular}{rcccr}
+    \toprule
+          &       & \multicolumn{2}{c}{\textbf{Valor real}} &  \\
+          &       & \textit{\textbf{p}} & \textit{\textbf{n}} & \multicolumn{1}{c}{\textbf{Total}} \\
+\cmidrule{3-4}          & \multicolumn{1}{c|}{\multirow{2}[2]{*}{\textit{\textbf{p'}}}} & \multicolumn{1}{l|}{\multirow{2}[2]{*}{Verdaderos Positivos}} & \multicolumn{1}{l|}{\multirow{2}[2]{*}{Falsos Positivos}} & \multicolumn{1}{c}{\multirow{2}[2]{*}{P'}} \\
+    \multicolumn{1}{c}{\multirow{2}[2]{*}{\textbf{Predicción}}} & \multicolumn{1}{c|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} &  \\
+\cmidrule{3-4}          & \multicolumn{1}{c|}{\multirow{2}[2]{*}{\textit{\textbf{n'}}}} & \multicolumn{1}{l|}{\multirow{2}[2]{*}{Falsos Negativos}} & \multicolumn{1}{l|}{\multirow{2}[2]{*}{Verdaderos Negativos}} & \multicolumn{1}{c}{\multirow{2}[2]{*}{N'}} \\
+          & \multicolumn{1}{c|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} &  \\
+\cmidrule{3-4}          & \textbf{Total} & P     & N     &  \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:mtrizconf}%
+\end{table}%
+
+De la matriz en el cuadro \ref{tab:mtrizconf} se derivan los conceptos, valores predictivos (positivo y negativo) que son hallados por el teorema de Bayes. Estos valores miden la eficacia real de una prueba diagnóstica, los mismos dan la probabilidad de padecer o no una enfermedad una vez conocido el resultado de la prueba. A continuación, se muestra cómo se definen dichos valores.
+
+\begin{itemize}
+    \item Valor predictivo positivo $(PV+)$: es la probabilidad de tener la enfermedad si el resultado de la prueba es positivo.
+    
+    $PV+: = \frac{VP}{FP+VP}$
+\end{itemize}
+\begin{itemize}
+    \item Valor predictivo negativo $(PV-)$: es la probabilidad de no tener la enfermedad si el resultado de la prueba es negativo.
+    
+    $PV-: = \frac{VN}{VN+FN}$
+\end{itemize}
+
+\section{Análisis de artículos donde se aplica el teorema de Bayes}
+En esta sección se presenta un resumen de lo propuesto de varios artículos que utilizan el teorema de Bayes con datos de pruebas diagnostico que para detectan el Covid-19. El objetivo de estos documentos es poder hallar con que probabilidad una persona que da positivo en un examen está realmente enferma y con los pacientes que resultan negativos que probabilidad existe que estas personas realmente no posean la enfermedad. 
+
+\subsection{Suplemento de precisión de la prueba Covid-19: las matemáticas del teorema de Bayes}
+En el artículo ``Suplemento de precisión de la prueba Covid-19: las matemáticas del teorema de Bayes" disponible en la liga: \href{https://www.statnews.com/2020/08/20/covid-19-test-accuracy-supplement-the-math-of-bayes-theorem/}{(https://www.statnews.com/2020/08/20/covid-19-test-accuracy-supplement-the-math-of-bayes-th-
+eorem/)}, los autores aplican los valores predictivos (positivo y negativo), variando la prevalencia (P) de la enfermedad. 
+
+En el primer caso toman como prevalencia o probabilidad de estar enfermo bajo, con el valor de $P = 1\%$ y valores de sensibilidad (SE) = 80\% y especificidad (SP) = 100\%. Dando como resultado $PV+ = 100\%$ y un $PV-= 99,8\%$. En el segundo caso se mantienen los valores de $SE$ y $SP$ y se varia la prevalencia con $P = 30\%$ esto significa que la probabilidad de dar positivo es mayor. Con estos valores se obtiene $PV+ = 100\%$ y un $PV-= 92\%$. Aquí se puede observar cómo afecta la prevalencia en los valores predictivos. 
+
+\subsection{Teorema de Bayes y pruebas de Covid-19}
+En el artículo ``Teorema de Bayes y pruebas de Covid-19" disponible en la liga:  \href{https://www.significancemagazine.com/science/660-bayes-theorem-and-covid-19-testing}{(https://www.significance-
+magazine.com/science/660-bayes-theorem-and-covid-19-testing)}, el autor calcula al igual que en artículo anterior el valor $PV+$ mediante la aplicación del teorema de Bayes para un $SE = 99\%$ y un $SP = 99\%$. Con valores de $P = (0.1\%, 1\%, 10\%)$ en cada caso. Con lo cual se muestra que incluso cuando se utiliza una prueba muy sensible $SE = 99\%$ cuanto menor sea la prevalencia, más probabilidades tenemos de obtener falsos positivos. También se puede demostrar que cuanto mayor sea prevalencia, más probabilidades tenemos de obtener falsos negativos. Esto significa que la calidad de las pruebas de Covid-19 depende de la magnitud del brote.
+
+\subsection{COVID-19, teorema de Bayes y toma de decisiones probabilísticas}
+Este articulo disponible en la liga: \href{https://towardsdatascience.com/covid-19-bayes-theorem-and-taking-data-driven-decisions-part-1-b61e2c2b3bea}{(https://towardsdatascience.com/covid-19-bayes-theorem-and-taking-data-driven-decisions-part-1-b61e2c2b3bea)}, plantea la realización de pruebas de personas al azar en lugares con prevalencia de la enfermedad muy pequeña (0.0001) no resulta útil en la detección del Covid-19. Además, plantea que en estos casos sería mejor hacerlo por grupos de muestras.
+\subsection{Interpretación de los resultados de la prueba COVID-19: un enfoque bayesiano y Teorema de Bayes, COVID19 y pruebas de detección} 
+En los artículos ``Interpretación de los resultados de la prueba COVID-19: un enfoque bayesiano" y ``Teorema de Bayes, COVID19 y pruebas de detección" disponibles en las ligas:\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7269418/}{(https://www.ncbi.nlm.nih.go-
+v/pmc/articles/PMC7269418/)} y \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7315940/}{(https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7315940/)} respectivamente, llegan a una conclusión similar planteando que las acciones y recomendaciones posteriores al diagnóstico se basan en gran medida en las probabilidades posteriores a la prueba, no en los resultados categóricos de "positivo" o "negativo". Por lo que un resultado negativo de una prueba sin conocer el $VP-$ de un individuo puede limitar la capacidad de los médicos para realizar las siguientes acciones y disposiciones apropiadas. Para todas las pruebas de detección, ya sea para COVID19 u otros diagnósticos, la comprensión de los valores predictivos y las razones de probabilidad con la ayuda del teorema de Bayes garantizará una interpretación sólida y las recomendaciones y acciones resultantes por parte del personal de salud y las partes interesadas. Un resultado de prueba negativo, en este paradigma, nunca es absolutamente negativo. Más bien, ajusta la probabilidad previa a la prueba de tener una enfermedad más baja. 
+
+\section{Aplicación del teorema de Bayes a datos de pruebas de Covid-19 en México}
+Como se pudo apreciar en las secciones anteriores en lo que a las pruebas diagnósticos se refiere, no solo interesa si el resultado es ``positivo" o ``negativo", además hay que tener en cuenta los valores predictivos (positivo y negativo). Estos últimos nos van a dar la probabilidad de un diagnóstico certero y los pasos a seguir del personal de salud a la hora de descartar o no la enfermedad en los pacientes. 
+
+\subsection{PCR}
+En México durante el enfrentamiento a la pandemia del Covid-19 la prueba diagnostico más utilizada es la prueba de detección de ácidos nucleicos: reacción en cadena de la polimerasa (PCR). El PCR tiene las siguientes características \cite{Yang2020}:
+\begin{itemize}
+    \item Especificidad, próxima al 100\%.
+    \item Sensibilidad variable dependiendo del momento del proceso infeccioso, es decir, de la carga viral, y del lugar de toma de la muestra. Entre cero y siete días tras el comienzo de la enfermedad, las sensibilidades para pacientes leves como severos fueron:
+    \begin{itemize}
+        \item Esputo: 89\%
+        \item Nasal: 73\%
+        \item Oro-faringe: 60\%
+    \end{itemize}
+\end{itemize}
+\subsection{Datos utilizados}
+Para el cálculo de $VP+$ y $VP-$ de pruebas diagnósticos PCR en Mexico, se utilizan datos abiertos proporcionados por el gobierno de México y disponibles en \cite{owidcoronavirus}, en la utilización del 16 de octubre del 2020. De dichos datos se extraen los siguientes valores:
+\begin{itemize}
+    \item Total de pruebas realizadas $(TP)$ = 1,903,285.
+    \item Total de pruebas positivas $(T+)$ = 837,445.
+    \item Total de pruebas negativas $(T-)$ = 1,065,840.
+    \item Tasa positiva $(P)$ = 0.295.
+\end{itemize}
+
+Con los valores de $SE = (60\%,73\%,89\%)$, $SP = 99,9\%$ del PCR y los valores $TP$, $T+$, $T-$ se crean matrices de confusión, para la obtención de los valores a emplear en teorema de Bayes, en el cuadro \ref{tab:1} de la página  \pageref{tab:1} se muestra un ejemplo de matriz de confección para $SE = 60\%$. En el cuadro \ref{tab:2} de la página \pageref{tab:2} se puede observar los resultados obtenidos del cálculo de los valores predictivos para cada una de las variantes. Como prevalencia de la enfermedad se utiliza el valor la tasa positiva que es una buena aproximación a la probabilidad previa a la prueba.
+
+
+\begin{table}
+  \centering
+  \caption{Matriz de confusión para $SE = 60\%$ }
+    \begin{tabular}{rcccr}
+    \toprule
+          &       & \multicolumn{2}{c}{\textbf{Valor real}} &  \\
+          &       & \textit{\textbf{p}} & \textit{\textbf{n}} & \multicolumn{1}{c}{\textbf{Total}} \\
+\cmidrule{3-4}          & \multicolumn{1}{c|}{\multirow{2}[2]{*}{\textit{\textbf{p'}}}} & \multicolumn{1}{c|}{\multirow{2}[2]{*}{502,467.00}} & \multicolumn{1}{c|}{\multirow{2}[2]{*}{1,065.00}} & \multicolumn{1}{c}{\multirow{2}[2]{*}{P'}} \\
+    \multicolumn{1}{c}{\multirow{2}[2]{*}{\textbf{Predicción}}} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\
+\cmidrule{3-4}          & \multicolumn{1}{c|}{\multirow{2}[2]{*}{\textit{\textbf{n'}}}} & \multicolumn{1}{c|}{\multirow{2}[2]{*}{334,978.00}} & \multicolumn{1}{c|}{\multirow{2}[2]{*}{1,064,774.00}} & \multicolumn{1}{c}{\multirow{2}[2]{*}{N'}} \\
+          & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\
+\cmidrule{3-4}          & \textbf{Total} & P     & N     &  \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:1}%
+\end{table}%
+
+
+\begin{table}
+  \centering
+  \caption{Resultados de la aplicación del teorema de Bayes}
+    \begin{tabular}{rrrrr}
+    \toprule
+    \textit{\textbf{SE(\%)}} & \textit{\textbf{SP(\%) }} & \textit{\textbf{P}} & \textit{\textbf{VP+(\%)}} & \textit{\textbf{VP-(\%)}} \\
+    \midrule
+    \multirow{2}[1]{*}{60.00} & \multirow{2}[1]{*}{99.90} & 0.3   & 99.61 & 85.35 \\
+          &       & 0.5   & 99.83 & 71.41 \\
+    \multirow{2}[0]{*}{73.00} & \multirow{2}[0]{*}{99.90} & 0.3   & 99.68 & 89.61 \\
+          &       & 0.5   & 99.86 & 78.72 \\
+    \multirow{2}[1]{*}{89.00} & \multirow{2}[1]{*}{99.90} & 0.3   & 99.73 & 95.49 \\
+          &       & 0.5   & 99.88 & 90.08 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:2}%
+\end{table}% 
+
+De los resultados obtenidos se puede concluir que el personal médico debe tener mayor cuidado con los valores negativos de las pruebas de PCR, dado que los $VP-$ nos muestran que existe altas probabilidades de falsos negativos cuando la sensibilidad es baja y la prevalencia aumenta, estos son parámetros a tener en cuenta a la hora de emitir el diagnostico final.
+
+
+
+
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{Biblio}
+
+\end{document}
