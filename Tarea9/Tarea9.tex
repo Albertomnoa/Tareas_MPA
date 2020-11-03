@@ -1,0 +1,469 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath}
+%\usepackage{verbatim}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage[margin=3cm,twoside]{geometry} 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\usepackage{fancyvrb}
+
+
+
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+	%
+	frame=lines,  % top and bottom rule only
+	framesep=2em, % separation between frame and text
+	rulecolor=\color{mygreen},
+	%
+	label=\fbox{\color{black} data.txt},
+	labelposition=topline,
+	%
+	commandchars=\|\(\), % escape character and argument delimiters for
+	% commands within the verbatim
+	%commentchar=*        % comment character
+}
+\renewcommand{\theenumi}{\roman{enumi}}
+\newtheorem{teor}{Teorema}
+\makeatother
+\title{Tarea 9 de Modelos Probabilistas Aplicados}
+\subtitle{Ejercicios}
+
+\author{5271}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section{Introducción}
+En este documento se presentan los resultados de varios ejercicios del libro ``\textit{Introduction to Probability}''\cite{libProba}.
+\section{Ejercicio 1 de la página 247}
+\emph{A card is drawn at random from a deck consisting of cards numbered $2$ through $10$. A player wins $1$ dollar if the number on the card is odd and loses $1$ dollar if the number if even. What is the expected value of his winnings?}
+
+\paragraph{Respuesta:}
+
+Definimos la variable aleatoria $X$ como, dolar que se pierde o gana el jugador. Por lo que:
+\begin{equation}\label{eq:1}
+P(X = 1) = P ({3,5,7,9}) = \frac{4}{9} . 
+\end{equation}
+\begin{equation}\label{eq:2}
+P(X = -1) = 1- P ({3,5,7,9}) = 1- \frac{4}{9} = \frac{5}{9}.
+\end{equation}
+Ahora para variables aleatorias discretas el valor esperado es:
+\begin{equation}\label{eq:3}
+ E[X] = \sum_{x \in \Omega} x
+	      \times P(X = x).   
+\end{equation}
+Sustituyendo los resultados de la ecuación \ref{eq:1}  y \ref{eq:2} en la ecuación \ref{eq:3} se tiene: 
+\begin{equation}\label{eq:4}
+\begin{array}{ll}
+ E[X] &= 1 \times \frac{4}{9} - 1 \times \frac{5}{9} \\
+       & \\
+ E[X]  &= - \frac{1}{9}.
+ \end{array}
+\end{equation}
+ Por tanto el valor esperado de las ganancias para el jugador es -1/9 de dolar.
+
+%\VerbatimInput{txt/1.txt}
+
+\section{Ejercicio 6 de la página 247}
+\emph{A die is rolled twice. Let $X$ denote the sum of the two numbers that turn up, and Y the difference of the numbers (specifically, the number on the first roll minus the number on the second). Show that $E(X Y) = E(X)E(Y )$. Are $X$ and $Y$ independent?}
+
+\paragraph{Respuesta:} Sea $X = a + b$ donde $a$ es el valor del primer tiro y $b$ el segundo, se tiene:
+$ X = (2, 3, 4, 5, 6, 7, 3, 4, 5, 6, 7, 8, 4, 5, 6, 7, 8, 9, 5, 6, 7, 8, 9, 10, 6, 7, 8, 9,10,11  7, 8, 9, 10,11, 12)$. La frecuencia de los valores de $X$ se muestran en el cuadro \ref{tab:1} de la página \pageref{tab:1}.
+
+\begin{table}[H]
+  \centering
+  \caption{Frecuencia de valores de $X$}
+    \begin{tabular}{rrr}
+    \toprule
+    \multicolumn{1}{p{5.39em}}{\textbf{Posibles valores de \textit{\textbf{x}}}} & \multicolumn{1}{l}{\textbf{frecuencia  \textit{\textbf{(x)}}}} & \multicolumn{1}{l}{\textit{\textbf{P(X = x)}}} \\
+    \midrule
+    2     & 1     & 0.028 \\
+    3     & 2     & 0.056 \\
+    4     & 3     & 0.083 \\
+    5     & 4     & 0.111 \\
+    6     & 5     & 0.139 \\
+    7     & 6     & 0.167 \\
+    8     & 5     & 0.139 \\
+    9     & 4     & 0.111 \\
+    10    & 3     & 0.083 \\
+    11    & 2     & 0.056 \\
+    12    & 1     & 0.028 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:1}%
+\end{table}%
+
+Del cuadro \ref{tab:1} podemos obtener que:
+\begin{equation}
+ P(X=x_{i})= \frac{\text{frecuencia de $x_{i}$} }{36}.   
+\end{equation}
+Sustituyendo en la ecuación \ref{eq:3}
+\begin{equation}
+\begin{array}{ll}
+   E[X] &= \sum_{i=1}^{11} x_{i}  \times P(X=x_{i})\\
+   &\\
+   E[X] & = 7
+  \end{array}
+\end{equation}
+
+Análogamente, sea $Y= a-b$. De $Y$ se obtiene los valores que muestra el cuadro \ref{tab:2} de la página \pageref{tab:2}.
+
+% Table generated by Excel2LaTeX from sheet 'Fsum'
+\begin{table}[H]
+  \centering
+  \caption{Frecuencia de valores de $X$ }
+    \begin{tabular}{rrr}
+    \toprule
+    \multicolumn{1}{p{5.39em}}{\textbf{Posibles valores de \textit{\textbf{x}}}} & \multicolumn{1}{l}{\textbf{frecuencia  \textit{\textbf{(x)}}}}  & \multicolumn{1}{l}{\textit{\textbf{P(X = x)}}} \\
+    \midrule
+    -5    & 1     & 0.028 \\
+    -4    & 2     & 0.056 \\
+    -3    & 3     & 0.083 \\
+    -2    & 4     & 0.111 \\
+    -1    & 5     & 0.139 \\
+    0     & 6     & 0.167 \\
+    1     & 5     & 0.139 \\
+    2     & 4     & 0.111 \\
+    3     & 3     & 0.083 \\
+    4     & 2     & 0.056 \\
+    5     & 1     & 0.028 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:2}%
+\end{table}%
+Sustituyendo en la ecuación \ref{eq:3}
+\begin{equation}
+\begin{array}{ll}
+   E[X] &= \sum_{i=1}^{11} x_{i}  \times P(X=x_{i})\\
+   &\\
+   E[X] & = 0
+  \end{array}
+\end{equation}
+Dado que $E(XY)= E((a+b)(a-b))$, tenemos para $XY$ los valores que se muestran en el cuadro \ref{tab:3} de la página \pageref{tab:3}. 
+
+
+\begin{table}[H]
+  \centering
+  \caption{Fragmento de valores de frecuencia de $XY$}
+    \begin{tabular}{rrr}
+    \toprule
+    \multicolumn{1}{p{5.39em}}{\textbf{Posibles valores de \textit{\textbf{xy}}}} & \multicolumn{1}{l}{\textbf{frecuencia  \textit{\textbf{(xy)}}}}  & \multicolumn{1}{l}{\textit{\textbf{P(XY = xy)}}} \\
+    \midrule
+    -35   & 1     & 0.028 \\
+    -32   & 1     & 0.028 \\
+    -9    & 1     & 0.028 \\
+    -8    & 1     & 0.028 \\
+    -7    & 1     & 0.028 \\
+    -5    & 1     & 0.028 \\
+    -3    & 1     & 0.028 \\
+    0     & 6     & 0.167 \\
+    3     & 1     & 0.028 \\
+    5     & 1     & 0.028 \\
+    7     & 1     & 0.028 \\
+    8     & 1     & 0.028 \\
+    9     & 1     & 0.028 \\
+    32    & 1     & 0.028 \\
+    35    & 1     & 0.028 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:3}%
+\end{table}%
+Sustituyendo en la ecuación \ref{eq:3}
+\begin{equation}
+\begin{array}{ll}
+   E[XY] &= \sum_{i=1}^{31} xy_{i}  \times P(XY=xy_{i})\\
+   &\\
+   E[XY] & = 0
+  \end{array}
+\end{equation}
+Ahora para comprobar si $X$ e $Y$ son variables aleatorias independientes, hay que probar que se cumple para todos los casos se cumpla que $P(X,Y) = P(X)P(Y)$. Por lo anteriormente mencionado, con encontrar un caso donde no se cumpla la propiedad para decir que las variables aleatorias  no son independientes. Como es el caso:
+\begin{equation}
+ P(X=12,Y=0) = P(a=6 , b=6) = \frac{1}{36} .  
+\end{equation}
+\begin{equation}
+ P(X=12)P(Y=0) = \frac{1}{36} \times \frac{1}{6} = \frac{1}{216}.  
+\end{equation}
+Por tanto   $P(X=12,Y=0) \neq P(X=12)P(Y=0)$, lo que implica que $X$ e $Y$ no son variables aleatorias independientes.
+\section{Ejercicio 15 de la página 249}
+\emph{A box contains two gold balls and three silver balls. You are allowed to choose successively balls from the box at random. You win 1 dollar each time you draw a gold ball and lose 1 dollar each time you draw a silver ball. After a draw, the ball is not replaced. Show that, if you draw until you are ahead by 1 dollar or until there are no more gold balls, this is a favorable game.}
+
+\paragraph{Respuesta:} Sea la bola dorada (G) y la bola plateada (S), dado que el juego se detiene cuando se está un dolar arriba o se acaban las bolas doradas. La variable aleatoria $X$ viene dada por las posibles maneras de jugar (ver cuadro \ref{tab:4}).
+\begin{table}[H]
+  \centering
+  \caption{orden de selección de la bolas, ganancias y probabilidades respectivas }
+    \begin{tabular}{lrr}
+    \toprule
+    \textbf{Orden  Selección} & \multicolumn{1}{l}{\textbf{Ganancias}} & \multicolumn{1}{l}{\textit{\textbf{P(X = x)}}} \\
+    \midrule
+    G     & 1     & 2/5 \\
+    SGG   & 1     & 1/10 \\
+    SGSG  & 0     & 1/10 \\
+    SSGG  & 0     & 1/10 \\
+    SSSGG & -1    & 1/10 \\
+    SSGSG & -1    & 1/10 \\
+    SGSSG & -1    & 1/10 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:4}%
+\end{table}%
+Ahora sustituyendo en la ecuación \ref{eq:3} se tiene:
+\begin{equation}
+\begin{array}{ll}
+   E[X] &= 1\times P(G)+1\times P(SSG) + 0 \times P(SGSG) +0 \times P(SSGG) \\
+   & -1\times P(SSSGG) -1 \times P(SSGSG) -1 \times P(SGSSG)\\
+   &\\
+    & = 1\times (\frac{2}{5})+ 1\times(\frac{1}{10})-1\times(\frac{1}{10})-1\times(\frac{1}{10}) -1\times(\frac{1}{10})\\ 
+    &\\
+   E[X] & = \frac{1}{5}.
+ 
+  \end{array}
+\end{equation}
+  Dado que la $E[X]$, es mayor que cero se puede concluir que es un juego favorable.
+
+
+\section{Ejercicio 18 de la página 249}  
+  
+\emph{Exactly one of six similar keys opens a certain door. If you try the keys, one after another, what is the expected number of keys that you will have to try before success?}
+
+\paragraph{Respuesta:} La variable aleatoria $X$ viene dada por el número de intentos fallidos antes de un éxito. Por lo que se tienen los valores en el cuadro \ref{tab:5} de la página \pageref{tab:5}.
+
+\begin{table}[H]
+  \centering
+  \caption{Probabilidades de ocurrencia de $x$}
+    \begin{tabular}{rr}
+    \toprule
+    \multicolumn{1}{l}{\textbf{\# de intentos ($x$)}} & \multicolumn{1}{c}{\textit{\textbf{P(X = x)}}} \\
+
+    \midrule
+    0     & $1/6$ \\
+    1     & $(5/6) \times (1/5)= 1/6$ \\
+    2     & $(5/6)\times(4/5)\times(1/4)= 1/6$ \\
+    3     & $(5/6)\times(4/5)\times(3/4)\times(1/3)= 1/6$ \\
+    4     & $(5/6)\times(4/5)\times(3/4)\times(2/3)\times(1/2)= 1/6$ \\
+    5     & $(5/6)\times(4/5)\times(3/4)\times(2/3)\times(1/2)\times1= 1/6$ \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:5}%
+\end{table}%
+Entonces se sustituye en la ecuación \ref{eq:3}:
+\begin{equation}
+\begin{array}{ll}
+   E[X] &= 0\times \left(\frac{1}{6}\right) + 1\times \left(\frac{1}{6}\right)+ 2\times \left(\frac{1}{6}\right)+ 3\times \left(\frac{1}{6}\right)+ 4\times \left(\frac{1}{6}\right)+ 5\times \left(\frac{1}{6}\right) \\
+   &\\
+   E[X] & =\left(\frac{5}{2}\right). 
+   
+  \end{array}
+\end{equation}
+Por lo que el número esperado de intentos antes de abrir la puerta es 2.5.
+
+\section{Ejercicio 19 de la página 249}  
+\emph{A multiple choice exam is given. A problem has four possible answers, and exactly one answer is correct. The student is allowed to choose a subset of the four possible answers as his answer. If his chosen subset contains the correct answer, the student receives three points, but he loses one point for each wrong answer in his chosen subset. Show that if he just guesses a subset uniformly and randomly his expected score is zero.}
+
+\paragraph{Respuesta:} Sea la puntuación obtenida en la elección del subconjunto de posibles respuestas una variable aleatoria $X$, se tiene que el espacio muestral esta conformado por dieciséis formas de escoger un subconjunto.  En el cuadro \ref{tab:6} de la página \pageref{tab:6} se mustra la cardinalidad de los posibles subconjuntos, así como los posibles valores de $x$ y las probabilidades asociadas a dichos valores.
+\begin{table}[H]
+  \centering
+  \caption{Add caption}
+    \begin{tabular}{crr}
+    \toprule
+    \multicolumn{1}{p{7em}}{\textbf{Elementos de Subconjuntos}} & \multicolumn{1}{p{5.39em}}{\textbf{Posibles Valores de \textit{\textbf{x}}}} & \multicolumn{1}{c}{\textit{\textbf{P(X = x)}}} \\
+    \midrule
+    0     & 0     & 1/16 \\
+    \midrule
+    \multirow{2}[2]{*}{1} & 3     & 1/16 \\
+          & -1    & 3/16 \\
+    \midrule
+    \multirow{2}[2]{*}{2} & 2     & 3/16 \\
+          & -2    & 3/16 \\
+    \midrule
+    \multirow{2}[2]{*}{3} & 1     & 3/16 \\
+          & -3    & 1/16 \\
+    \midrule
+    4     & 0     & 1/16 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:6}%
+\end{table}%
+
+Sustituyendo en la ecuación \ref{eq:3}:
+\begin{equation}
+\begin{array}{ll}
+   E[X] &= 3\times \left(\frac{1}{16}\right) - 1\times \left(\frac{3}{16}\right)+ 2\times \left(\frac{3}{16}\right)- 2\times \left(\frac{3}{16}\right)+ 1\times \left(\frac{3}{16}\right)- 3\times \left(\frac{1}{16}\right) \\
+   &\\
+   E[X] & = 0. 
+  
+   \end{array}
+   \end{equation}
+    Entonces si solo adivina un subconjunto de manera uniforme y aleatoria, su puntuación esperada es cero.
+\section{Ejercicio 1 de la página 263}   
+ \emph{A number is chosen at random from the set \( S = \lbrace -1, 0, 1 \rbrace \). Let \(X\) be the number chosen. Find the expected value, variance, and standard deviation of \(X\).}
+ 
+\paragraph{Respuesta:}Sustituyendo en la ecuación \ref{eq:3} se tiene:
+\begin{equation}
+\begin{array}{ll}
+   E[X] &= -1\times \left(\frac{1}{3}\right) + 0\times \left(\frac{1}{3}\right)+1\times \left(\frac{1}{3}\right)\\
+   &\\
+   E[X] & = 0. 
+     \end{array}
+   \end{equation}
+Para calcular la varianza se tiene la expresión $\sigma ^{2}(X)= E(X^{2})-E(X)^{2}$ por lo que:   
+  \begin{equation}
+\begin{array}{ll}
+   \sigma ^{2} &= (-1)^{2}\times \left(\frac{1}{3}\right) + (0)^{2}\times \left(\frac{1}{3}\right)+(1)^{2}\times \left(\frac{1}{3}\right) -(0)^{2}\\
+   &\\
+   \sigma ^{2} & = \frac{2}{3}. 
+   
+     \end{array}
+   \end{equation}
+   La desviación estándar no se calcula hallando $\sqrt{\sigma ^{2}} $ por lo que $\sigma =\sqrt{\frac{2}{3}}$.
+\section{Ejercicio 9 de la página 264}      
+   \emph{A die is loaded so that the probability of a face coming up is proportional to the number on that face. The die is rolled with outcome $X$. Find $V(X)$ and $D(X)$.}
+   
+\paragraph{Respuesta:}  Ya que el dado está cargado y la probabilidad de cada cara es proporcional al valor de la cara correspondiente. Es decir que la $P(X=x)$ es proporcional a $x$, y se define un factor de proporcionalidad $c$, así que $P(X=x)=xc$. Por lo que:
+
+\begin{equation}
+\begin{array}{ll}
+  1 & = c+2c+3c+4c+5c+6c\\
+         &  \\
+   c & = \frac{1}{21}. 
+     \end{array}
+  \end{equation}
+En el cuadro \ref{tab:7} de la página \pageref{tab:7} se muestran las probabilidades de cada cara para la constante de proporcionalidad $c=\frac{1}{21}$
+
+\begin{table}[H]
+  \centering
+  \caption{Probabilidades de cada cara del dado cargado}
+    \begin{tabular}{ccr}
+    \toprule
+    \textbf{Valores  de x} & \textit{\textbf{P(X = x)}} & \multicolumn{1}{c}{\textit{\textbf{P(X =x ) para c = 1/21}}} \\
+    \midrule
+    1     & 1c    & 1/21 \\
+    2     & 2c    & 2/21 \\
+    3     & 3c    & 3/21 \\
+    4     & 4c    & 4/21 \\
+    5     & 5c    & 5/21 \\
+    6     & 6c    & 6/21 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:7}%
+\end{table}%
+Con los valores de probabilidad de cada se procede a calcular $E(X)$:
+\begin{equation}
+\begin{array}{ll}
+   E[X] &= 1\times \left(\frac{1}{21}\right) + 2\times \left(\frac{2}{21}\right)+3\times \left(\frac{3}{21}\right)+ 4\times \left(\frac{4}{21}\right) + 5\times \left(\frac{5}{21}\right)+6\times \left(\frac{6}{21}\right)\\
+   &\\
+   E[X] & =\frac{91}{21} = \frac{13}{3}. 
+     \end{array}
+   \end{equation}
+   Calculando $\sigma ^{2}$
+   \begin{equation}
+\begin{array}{ll}
+   \sigma ^{2} &= (1)^{2}\times \left(\frac{1}{21}\right) + (2)^{2}\times \left(\frac{2}{21}\right)+(3)^{2}\times \left(\frac{3}{21}\right)+ (4)^{2}\times \left(\frac{4}{21}\right) + (5)^{2}\times \left(\frac{5}{21}\right)+(6)^{2}\times \left(\frac{6}{21}\right) -(\frac{13}{3})^{2}\\
+   &\\
+   \sigma ^{2} & = \frac{20}{9}. 
+     \end{array}
+   \end{equation}  
+ Por tanto $\sigma = \sqrt{\frac{20}{9}}$.  
+\section{Ejercicio 12 de la página 264}    
+\emph{Let $X$ be a random variable with $\mu = E(X)$ and $\sigma^2 = V(X)$. Define $X^\ast = (X-\mu)/\sigma$. The random variable $X^\ast$ is called the standardized random variable associated with $X$. Show that this standardized random variable has expected value 0 and variance 1.} 
+
+\paragraph{Respuesta:} Teniendo en cuenta las propiedades siguientes de la esperanza (ecuación \ref{eq:c} y \ref{eq:mas} y la definición de $\sigma^{2}$(ecuación \ref{eq:def}) :
+\begin{equation}\label{eq:c}
+ E(cX)= cE(X).   
+\end{equation}
+\begin{equation}\label{eq:mas}
+ E(X+Y)= E(X)+ E(Y). 
+\end{equation}
+\begin{equation}\label{eq:def}
+ \sigma^{2}= E(X-\mu^{2}). 
+\end{equation}
+Se calcula:
+\begin{equation}
+\begin{array}{ll}
+   E[X^{*}] &= E\left(\frac{X-\mu}{\sigma}\right) \\
+   &\\
+   & = \frac{1}{\sigma}E(X-\mu)  \\
+   &\\
+   & = \frac{1}{\sigma}\left[E(X) - E(\mu)\right]\\
+&\\
+   & = \frac{1}{\sigma}\times 0 \\
+&\\
+   E[X^{*}] & = 0.
+      \end{array}
+   \end{equation}
+Ya con el valor de $E(X^{*})$ se cálcala el valor $\sigma^{2}$
+\begin{equation}
+\begin{array}{ll}
+   \sigma ^{2} & = E(X^{*2})- 0^{2}  \\
+   &\\
+   &= E\left(\frac{X-\mu}{\sigma}\right)^{2}\\
+    &\\
+   &=  \frac{1}{\sigma^{2}} E(X-\mu)^{2}\\
+   &\\
+     &=\frac{1}{\sigma^{2}} \times \sigma^{2}\\
+      &\\
+   \sigma ^{2} & = 1. 
+     \end{array}
+   \end{equation}  
+   
+\newpage
+\bibliographystyle{plain}
+\bibliography{Biblio}
+
+\end{document}
