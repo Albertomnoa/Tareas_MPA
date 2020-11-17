@@ -1,0 +1,4 @@
+	Shapiro-Wilk normality test
+
+data:  re$resul
+W = 0.9912, p-value = 0.06439
