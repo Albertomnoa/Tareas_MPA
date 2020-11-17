@@ -71,7 +71,7 @@
 	framesep=2em, % separation between frame and text
 	rulecolor=\color{mygreen},
 	%
-	label=\fbox{\color{black} summary.txt},
+	label=\fbox{\color{black} prueba.txt},
 	labelposition=topline,
 	%
 	commandchars=\|\(\), % escape character and argument delimiters for
@@ -118,7 +118,7 @@ $(f \ast g)(z) = \displaystyle\int_{-\infty}^\infty f(z - y) \times g(y) \text{d
  
 \paragraph{Teoría de la probabilidad:} Si se considera una situación en la que se tienen dos variables aleatorias independientes,  $X$ e $Y$, con funciones de densidad de probabilidad $f$ y $g$ respectivamente. Y se desea calcular la función de densidad ($X+Y$), podemos usar la convolución de $f$ y $g$. Por lo que se puede calcular la suma de cualquier número de variables independientes. Esto es importante porque muchas de las distribuciones estándar se caracterizan por patrones de convolución simples, lo que significa que podemos encontrar sus funciones de densidad de probabilidad mediante convolución.
 
-Para realizar una prueba numérica de lo antes mencionado se utilizan los valores de rendimiento del oro y del platino obtenidos del sitio Yahoo!finanzas en la liga: \href{https://es.finance.yahoo.com/materias-primas}{https://es.finance.yahoo.com/materias-primas}. Los valores de rendimientos fueron calculados a partir de los datos obtenidos como el valor de cierre menos el valor de apertura, el mismo es una variable aleatoria. Se pretende calcular la probabilidad conjunta de las variables $X$(oro) e $Y$ (platino), para lo cual se utiliza la función \textit{convolve} de la librería de R que utiliza la transformada rápida de Fourier para calcular la convolución de dos secuencias. En la figura \ref{fig:1} de la página \pageref{fig:1} se puede observar los resultados obtenidos. 
+Para realizar una prueba numérica de lo antes mencionado se utilizan los valores de rendimiento del oro y del platino obtenidos del sitio \textit{Yahoo!finanzas} en la liga: \href{https://es.finance.yahoo.com/materias-primas}{https://es.finance.yahoo.com/materias-primas}. Los valores de rendimientos fueron calculados a partir de los datos obtenidos como el valor de cierre menos el valor de apertura, el mismo es una variable aleatoria. Se pretende calcular la probabilidad conjunta de las variables $X$ (oro) e $Y$ (platino), para lo cual se utiliza la función \textit{convolve} de la librería de R que utiliza la transformada rápida de Fourier para calcular la convolución de dos secuencias. En la figura \ref{fig:1} de la página \pageref{fig:1} se puede observar los resultados obtenidos. 
 
 \begin{figure}
 \centering
@@ -207,7 +207,7 @@ Para demostrar numéricamente la igualdad planteada en la ecuación \ref{eq:2} d
     58    & -1.37364 & -0.18682 \\
     \bottomrule
     \end{tabular}%
-  \label{tab:tab:1}%
+  \label{tab:1}%
 \end{table}%
 \begin{table}[H]
   \centering
