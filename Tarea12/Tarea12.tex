@@ -1,0 +1,413 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath,amssymb,amscd,amsthm}
+%\usepackage{verbatim}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage[margin=3cm,twoside]{geometry} 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\usepackage{fancyvrb}
+\usepackage{enumerate}
+\newcommand\ql{\textquotedblleft}
+\newcommand\qr{\textquotedblright}
+
+
+\newcommand\E{\ensuremath{\mathbb{E}}}
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\renewcommand{\P}{\ensuremath{\mathbb{P}}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+
+\newcommand\Om{\ensuremath{\Omega}}
+\newcommand{\w}{\ensuremath{\omega}}
+
+\newcommand\var[1]{\, \mathrm{Var} \left( #1 \right)}
+
+\newcommand\pr[1]{\, \mathbb{P} \left( #1 \right)}
+
+\newcommand\cov[1]{\, \mathrm{Cov} \left( #1 \right)}
+
+\newcommand\espe[1]{\, \mathbb{E} \lbrack #1 \rbrack}
+
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+	%
+	frame=lines,  % top and bottom rule only
+	framesep=2em, % separation between frame and text
+	rulecolor=\color{mygreen},
+	%
+	label=\fbox{\color{black} prueba.txt},
+	labelposition=topline,
+	%
+	commandchars=\|\(\), % escape character and argument delimiters for
+	% commands within the verbatim
+	%commentchar=*        % comment character
+}
+\renewcommand{\theenumi}{\roman{enumi}}
+\newtheorem{teor}{Teorema}
+\makeatother
+ \title{Tarea 12 de Modelos Probabilistas Aplicados}
+\subtitle{Ejercicios}
+\author{5271}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section{Introducción}
+En este documento se presentan los resultados de varios ejercicios del libro ``\textit{Introduction to Probability}''\cite{libProba}.
+\section{Ejercicio 1 de la página 392}
+\textit{Let $Z_1, Z_2, \ldots, Z_n$ describe a branching process in which each parent has $j$ offspring with probability $p_j$. Find the probability $d$ that the process eventually dies out if}
+\begin{enumerate}[a)]
+				\item $p_0 = \frac{1}{2}, p_1 = \frac{1}{4}, p_2 = \frac{1}{4}$.
+				\item $p_0 = \frac{1}{3}, p_1 = \frac{1}{3}, p_2 = \frac{1}{3}$.
+				\item $p_0 = \frac{1}{3}, p_1 = 0, p_2 = \frac{2}{3}$.
+				\item $p_j = \frac{1}{2}^{j + 1}$, for $j = 0, 1, 2,... $
+				\item $p_j = (\frac{1}{3}) (\frac{2}{3})^j$, for $j = 0, 1, 2,... $
+				 \item $p_j = e^{-2} 2^j / j!$, for $j = 0, 1, 2,... $ (estimate $d$ nummerically)
+			\end{enumerate}
+De acuerdo al teorema 10.3 si el número medio m de descendientes producidos por un solo padre es $\leq 1$, entonces d $= 1$ y el proceso se extingue con probabilidad uno. Si m $> 1$ entonces d $< 1$ y el proceso se extingue con probabilidad d. 
+Para la resolución de los incisos a), b), c) se utiliza la expresión siguiente:
+\begin{equation}
+\mathrm{m}  = p_{1}+2p_{2} = 1-p_{0}+p_{2}    
+\end{equation}
+\paragraph{a)}$p_0 = \frac{1}{2}, p_1 = \frac{1}{4}, p_2 = \frac{1}{4}$.
+
+ \begin{align}
+   \mathrm{m}  &= p_{1}+2p_{2} \\
+               &= \frac{1}{4} + 2\left(\frac{1}{4}\right)\\
+               &= \frac{3}{4}
+ \end{align}
+Por tanto m es menor que uno y la probabilidad de decadencia es uno.
+ 
+\paragraph{b)}$p_0 = \frac{1}{3}, p_1 = \frac{1}{3}, p_2 = \frac{1}{3}$.
+\begin{align}
+   \mathrm{m}  &= p_{1}+2p_{2} \\
+               &= \frac{1}{3} + 2\left(\frac{1}{3}\right)\\
+               &= 1
+ \end{align}
+ Por tanto m es igual a uno y la probabilidad de decadencia es uno.
+ \paragraph{c)}$p_0 = \frac{1}{3}, p_1 = 0, p_2 = \frac{2}{3}$.
+ 
+ \begin{align}
+   \mathrm{m}  &= p_{1}+2p_{2} \\
+               &= 0 + 2\left(\frac{2}{3}\right) \\
+               &= \frac{4}{3}
+ \end{align}
+ Por tanto m es mayor que uno y la probabilidad de decadencia es igual a d. A contención pasamos a calcular la probabilidad de decadencia (d) 
+ \begin{align} 
+        d & = \frac{p_{0}}{p_{2}}\\ 
+          & = \frac{\frac{1}{3}}{\frac{2}{3}}\\
+        d & = \frac{1}{2} \\ 
+\end{align}
+\paragraph{d)}$p_j = \frac{1}{2}^{j + 1}$, for $j = 0, 1, 2, $.
+ \begin{align}
+    h(z) &= p_0 + p_1z + p_2z^2 + p_3z^3 +p_4z^4 ... \\
+      &= \frac{1}{2}^{0 + 1} + \frac{1}{2}^{1 + 1}z + \frac{1}{2}^{2 + 1}z^2 + \frac{1}{2}^{3 + 1}z^3 +\frac{1}{2}^{4 + 1}z^4 +...\\
+      &= \frac{1}{2}^{1} + \frac{1}{2}^{2}z + \frac{1}{2}^{3}z^2 + \frac{1}{2}^{4}z^3 +\frac{1}{2}^{5}z^4 .. \\
+      &= \frac{1}{2} (1 + 1 / 2^{1}z + 1 / 2^{2}z^2 + 1 / 2^{3}z^3 +...)\\
+      &= \frac{1}{2} \left(\frac{1}{1 - \frac{1}{2} z}\right)\\
+      &= \frac{1}{2 - z}.
+  \end{align}
+ Calculando  h'(z) tenemos:
+ \begin{align} 
+        h'(z) &= \frac{d}{dz} \left( \frac{1}{2 - z} \right)\\
+         &= \frac{- \frac{d}{dz} \left( 2 - z \right)}{(2 - z)^2}\\
+          &= \frac{1}{(2 - z)^2}\\
+\end{align}
+ahora calculamos h'(1):
+ $m = h'(1) = \frac{1}{(2 - 1)^2} = 1 $
+ Como m es igual a 1 entones la probabilidad de decadencia es uno.
+
+\section{Ejercicio 3 de la página 392}	
+\textit{In the chain letter problem (see Example 10.14) find your expected profit if}
+
+			\begin{enumerate}[a)]
+				\item $p_0 = 1/2, \, p_1 = 0, \, p_2 = 1/2$.
+				\item $p_0 = 1/6, \, p_1 = 1/2, \, p_2 = 1/3$.
+			\end{enumerate}
+		\textit{	Show that if} $p_0 > 1 / 2$,\textit{ you cannot expect to make a profit.}
+		
+Para la resolver este ejercicio se se emplea la siguiente expresión: 
+\begin{equation}
+    50\mathrm{m} + 50 \mathrm{m}^{12}, \quad \text{con}\quad  \mathrm{m} = p_1 + 2p_2.
+\end{equation}
+
+	
+\paragraph{a)} $p_0 = 1/2, \, p_1 = 0, \, p_2 = 1/2$.
+ Sustituyendo en la expresión anterior se tiene:
+ \begin{align}
+     	\mathrm{m} &=0 + 2\left(\frac{1}{2}\right)\\
+     	   &=1,
+ \end{align}
+ por lo que:
+  \begin{align}
+  50(1)+50(1^{12})-100 =0   
+ \end{align}
+ Por tanto el la ganancia esperada es cero.
+
+\paragraph{b)} $p_0 = 1/6, \, p_1 = 1/2, \, p_2 = 1/3$.
+	 \begin{align}
+     	\mathrm{m} &=\frac{1}{2} + 2\left(\frac{1}{3}\right)\\
+     	   &=\frac{7}{6},
+ \end{align}
+ por lo que:
+  \begin{align}
+  50\left(\frac{7}{6}\right)+50\left(\frac{7}{6}\right)^{12}-100 \approx 276.3
+ \end{align}
+ Por tanto el la ganancia esperada es 276.3.
+ 
+Para todos los posibles valores de $p_0 > 1 / 2 $, $p_2<p_0$ por lo tanto  $\mathrm{m}<1$ y $50\mathrm{m} + 50 \mathrm{m}^{12}<100$, por lo que el juego no va a ser favorable.
+\section{Ejercicio 1 de la página 401 }
+\textit{Let $X$ be a continuous random variable with values in $[0,2]$ and density $f_X$. Find the moment generating function $g(t)$ for $X$ if}
+\begin{enumerate}[a)]
+  \item $f_X(x) = \frac{1}{2}$.
+  \item $f_X (x) = \frac{1}{2}x$.
+  \item  $f_X (x) = 1 - \frac{1}{2}x$.
+  \item $f_X (x) = |1 - x|$.
+  \item $f_X (x) = \frac{3}{8}x^2$.
+  \end{enumerate}
+   Para la realización de este ejercicio se utiliza la ecuación siguiente:
+  \begin{align}
+    g(t)&=\espe{e^{tx}}\\
+       &= \displaystyle\int_{-\infty}^\infty e^{tx}fX(x)\text{d} x
+  \end{align}   
+     
+
+ 
+\paragraph{a)}
+$fX(x) = \frac{1}{2}.$
+
+\begin{align}
+   g(t) &= \displaystyle\int_{0}^2 {e}^{tx}\cdot\dfrac{1}{2}{\mathrm{d}x}   \\
+        &=    {\displaystyle\int}\dfrac{\mathrm{e}^{tx}}{2}\,\mathrm{d}x\\
+        &= \dfrac{1}{2t}{\displaystyle\int}\mathrm{e}^u\,\mathrm{d}u \\       
+        &=  \dfrac{\mathrm{e}^{tx}}{2t} \\
+        &=  \dfrac{\frac{\mathrm{e}^{2t}}{t}-\frac{1}{t}}{2}  \\
+        &=   \dfrac{\mathrm{e}^{2t}-1}{2t}.
+\end{align}
+\paragraph{b)}
+$fX(x) = \frac{1}{2}(x).$
+
+\begin{align}
+   g(t) &= \displaystyle\int_{0}^2 {e}^{tx}\cdot\dfrac{1}{2}x{\mathrm{d}x}   \\
+        &=  \dfrac{1}{2}{\displaystyle\int}x\mathrm{e}^{tx}\,\mathrm{d}x.
+\end{align}
+   Resolviendo: 
+    \begin{equation*}
+        {\displaystyle\int}x\mathrm{e}^{tx}\,\mathrm{d}x,\\
+    \end{equation*}
+    se tiene:
+        \begin{align}
+         &= \dfrac{x\mathrm{e}^{tx}}{t}-{\displaystyle\int}\dfrac{\mathrm{e}^{tx}}{t}\,\mathrm{d}x
+         \end{align}
+          Ahora se resuelve: 
+    \begin{equation*}
+        {\displaystyle\int}\dfrac{\mathrm{e}^{tx}}{t}\,\mathrm{d}x,\\
+    \end{equation*}  
+    y se tiene:
+   \begin{align}      
+        &=  \dfrac{1}{t^2}{\displaystyle\int}\mathrm{e}^u\,\mathrm{d}u \\
+        &=  \dfrac{\mathrm{e}^u}{t^2} \\
+        &=   \dfrac{\mathrm{e}^{tx}}{t^2}.
+\end{align}
+Remplazando las integrales resuelta se tiene:
+ \begin{align}
+ &=\dfrac{1}{2}\left[\dfrac{x\mathrm{e}^{tx}}{t}-\dfrac{\mathrm{e}^{tx}}{t^2}\right]\\
+ &= \dfrac{x\mathrm{e}^{tx}}{2t}-\dfrac{\mathrm{e}^{tx}}{2t^2}\\
+  &=   \dfrac{\left(tx-1\right)\mathrm{e}^{tx}}{2t^2}\\
+  &= \dfrac{\left(2t-1\right)\mathrm{e}^{2t}+1}{2t^2}.
+\end{align}
+
+\paragraph{c)}
+$fX(x) = 1-\frac{1}{2}(x).$
+
+\begin{align}
+   g(t) &= \displaystyle\int_{0}^2 {e}^{tx}\cdot\left(1-\dfrac{1}{2}x\right){\mathrm{d}x}   \\
+        &=  -\dfrac{1}{2}{\displaystyle\int}\left(x-2\right)\mathrm{e}^{tx}\,\mathrm{d}x.
+\end{align}
+   Resolviendo: 
+    \begin{equation*}
+        {\displaystyle\int}\left(x-2\right)\mathrm{e}^{tx}\,\mathrm{d}x,\\
+    \end{equation*}
+    se tiene:
+        \begin{align}
+         &= \dfrac{\left(x-2\right)\mathrm{e}^{tx}}{t}-{\displaystyle\int}\dfrac{\mathrm{e}^{tx}}{t}\,\mathrm{d}x
+         \end{align}
+          Ahora se resuelve: 
+    \begin{equation*}
+       {\displaystyle\int}\dfrac{\mathrm{e}^{tx}}{t}\,\mathrm{d}x,\\
+    \end{equation*}  
+    y se tiene:
+   \begin{align}      
+        &=  \dfrac{1}{t^2}{\displaystyle\int}\mathrm{e}^u\,\mathrm{d}u \\
+        &=  \dfrac{\mathrm{e}^u}{t^2} \\
+        &=   \dfrac{\mathrm{e}^{tx}}{t^2}.
+\end{align}
+Remplazando las integrales resuelta se tiene:
+ \begin{align}
+ &=-\dfrac{1}{2}\left[\dfrac{\left(x-2\right)\mathrm{e}^{tx}}{t}-\dfrac{\mathrm{e}^{tx}}{t^2}\right]\\
+ &= \dfrac{\mathrm{e}^{tx}}{2t^2}-\dfrac{\left(x-2\right)\mathrm{e}^{tx}}{2t}\\
+  &=   \dfrac{\mathrm{e}^{2t}}{2t^2}-\dfrac{2t+1}{2t^2}\\
+  &= \dfrac{\mathrm{e}^{2t}-2t-1}{2t^2}.
+\end{align}
+
+\paragraph{d)}
+$fX(x) = \left|x-1\right|.$
+
+\begin{align}
+   g(t) &= \displaystyle\int_{0}^2 {e}^{tx}\cdot\left|x-1\right|{\mathrm{d}x}   \\
+        &=  \dfrac{\left|x-1\right|\mathrm{e}^{tx}}{t}-{\displaystyle\int}\dfrac{\left(x-1\right)\mathrm{e}^{tx}}{t\left|x-1\right|}\,\mathrm{d}x.
+\end{align}
+   Resolviendo: 
+    \begin{equation*}
+        {\displaystyle\int}\dfrac{\left(x-1\right)\mathrm{e}^{tx}}{t\left|x-1\right|}\,\mathrm{d}x,\\
+    \end{equation*}
+    se tiene:
+        \begin{align}
+         &= \dfrac{1}{t^2}{\displaystyle\int}1\,\mathrm{d}u,
+         \end{align}
+          ahora se resuelve: 
+    \begin{equation*}
+       {\displaystyle\int}1\,\mathrm{d}u,\\
+    \end{equation*}  
+    y se tiene:
+   \begin{align}      
+        &= u\\
+         &=\dfrac{u}{t^2},
+        \end{align}
+        desciendo la sustitución:
+        \begin{align}  
+        &=  \dfrac{\left(x-1\right)\mathrm{e}^{tx}}{t^2\left|x-1\right|}.
+\end{align}
+Remplazando las integrales resuelta se tiene:
+ \begin{align}
+ &=\dfrac{\left|x-1\right|\mathrm{e}^{tx}}{t}-\dfrac{\left(x-1\right)\mathrm{e}^{tx}}{t^2\left|x-1\right|}\\
+ &= \dfrac{\left(t-1\right)\mathrm{e}^{2t}}{t^2}+\dfrac{2\mathrm{e}^t}{t^2}-\dfrac{t+1}{t^2}\\
+  &= \dfrac{\left(t-1\right)\mathrm{e}^{2t}+2\mathrm{e}^t-t-1}{t^2}.
+\end{align}
+
+\paragraph{e)}
+$fX(x) = \frac{3}{8}(x^{2}).$
+
+\begin{align}
+     g(t) &= \displaystyle\int_{0}^2 {e}^{tx}\cdot\dfrac{3}{8}x^{2}{\mathrm{d}x}   \\
+        &=  \dfrac{3}{8}{\displaystyle\int}x^2\mathrm{e}^{tx}\,\mathrm{d}x.
+\end{align}
+   Resolviendo: 
+    \begin{equation*}
+        {\displaystyle\int}x^2\mathrm{e}^{tx}\,\mathrm{d}x,\\
+    \end{equation*}
+    se tiene:
+        \begin{align}
+         &= \dfrac{x^2\mathrm{e}^{tx}}{t}-{\displaystyle\int}\dfrac{2x\mathrm{e}^{tx}}{t}\,\mathrm{d}x,
+         \end{align}
+          ahora se resuelve: 
+    \begin{equation*}
+       {\displaystyle\int}\dfrac{2x\mathrm{e}^{tx}}{t}\,\mathrm{d}x,\\
+    \end{equation*}  
+    y se tiene:
+   \begin{align}      
+        &= \dfrac{2}{t}{\displaystyle\int}x\mathrm{e}^{tx}\,\mathrm{d}x,
+               \end{align}
+          resolviendo: 
+    \begin{equation*}
+       {\displaystyle\int}x\mathrm{e}^{tx}\,\mathrm{d}x,\\
+    \end{equation*}  
+   se tiene:
+   \begin{align} 
+         &=\dfrac{1}{t^2}{\displaystyle\int}\mathrm{e}^u\,\mathrm{d}u\\
+          &= \dfrac{\mathrm{e}^u}{t^2}\\
+          &==\dfrac{\mathrm{e}^{tx}}{t^2}
+\end{align}
+Remplazando las integrales resuelta se tiene:
+ \begin{align}
+ &=\dfrac{3}{8}\left[\dfrac{x^2\mathrm{e}^{tx}}{t}-\dfrac{2x\mathrm{e}^{tx}}{t^2}+\dfrac{2\mathrm{e}^{tx}}{t^3}\right]\\
+ &= \dfrac{3x^2\mathrm{e}^{tx}}{8t}-\dfrac{3x\mathrm{e}^{tx}}{4t^2}+\dfrac{3\mathrm{e}^{tx}}{4t^3}\\
+  &= \dfrac{\left(6t^2-6t+3\right)\mathrm{e}^{2t}-3}{4t^3}.
+\end{align}
+
+
+\section{Ejercicio 6 de la página 402}
+
+\textit{Let $X$ be a continuous random variable whose characteristic function $k_X (\tau)$ is $k_X(\tau) = e^{-|\tau|}$, $-\infty < \tau < \infty$. Show directly that the density $f_X$ of $X$ is}
+  \begin{equation*}
+      f_X(x) = \frac{1}{\pi (1+x^2)}.
+  \end{equation*}
+Para la solución de este ejercicio se utilizara la formula que se muestra a continuación:
+  \begin{equation}
+      f_X(x) = \frac{1}{2\pi}\displaystyle\int_{-\infty}^\infty e^{-i\tau x}\cdot k_{X}(\tau)\mathrm{d}\tau .
+  \end{equation}
+\paragraph{Respuesta}  sustituyendo en la ecuación anterior se tiene: 
+  \begin{align}
+      f_X(x) &= \frac{1}{2\pi}\displaystyle\int_{-\infty}^\infty e^{-i\tau x}\cdot e^{-|\tau|}\mathrm{d}\tau \\ 
+             &=\frac{1}{2\pi} \left( \int_{-\infty}^{0}e^{-ix\tau} e^{\tau}\, d\tau \right) + \frac{1}{2\pi} \left( \int_{0}^{\infty}e^{-ix\tau} e^{-\tau}\, d\tau \right)  \\
+            &= \frac{1}{2\pi} \left(\dfrac{\mathrm{i}x+1}{x^2+1}\right)+\frac{1}{2\pi}\left[- \left(\dfrac{\mathrm{i}x-1}{x^2+1}\right)\right]\\
+            &=\frac{1}{2\pi}\left( \dfrac{\mathrm{i}x+1 -\mathrm{i}x +1}{x^2+1} \right)\\
+            &= \frac{1}{2\pi}\left( \dfrac{2}{x^2+1} \right)\\
+            &= \frac{1}{\pi (1+x^2)}.
+  \end{align}
+
+
+
+   
+\newpage
+\bibliographystyle{plain}
+\bibliography{Biblio}
+
+\end{document}
