@@ -403,8 +403,47 @@ Para la solución de este ejercicio se utilizara la formula que se muestra a con
             &= \frac{1}{\pi (1+x^2)}.
   \end{align}
 
+\section{ejercicio 10 de la página 402}
 
+  \textit{Let $X_1, X_2, \ldots, X_n$ be an indepentent trials process with density}
+  \begin{equation*}
+    f(x) = \frac{1}{2} e^{-|x|}, -\infty < x < + \infty.
+  \end{equation*}
+  \begin{enumerate}[a)]
+    \item Find the mean and variance of $f(x)$.
+    \item Find the moment generating function for $X_1, S_n, A_n$, and $S_n^*$.
+    \item What can you say about the moment generating function of $S_n^*$ as $n \rightarrow \infty$.
+    \item What can you say about the moment generating function of $A_n$ as $n \rightarrow \infty$.
+  \end{enumerate}
+\paragraph{a)}Find the mean and variance of $f(x)$.
 
+				\begin{align}
+				   	\mathbb{E}(X)  & = \int_{-\infty}^{\infty}x\dfrac{e^{-|x|}}{2} dx \\
+				& = \dfrac{1}{2}\int_{-\infty}^{\infty}  \dfrac{x}{|x|} e^{-|x|} |x| dx\\
+				& = - \dfrac{e^{-|x|} |x|}{2} - \dfrac{e^{-|x|}}{2}\\
+				& = \left[ \dfrac{e^{-|x|} (-|x|-1)}{2}\right] _{-\infty}^{\infty}\\
+				& = 0. 
+				\end{align}
+				
+				Ya se tiene el valor de $\espe{X}$, pasamos a calcular $\mathbb{V}(X)$ con la expresión:
+				\begin{equation}
+				    	\mathbb{V}(X) = \espe{X^{2}} - \espe{X}^{2})\\
+				\end{equation}
+		
+			\begin{align}
+			   \espe{X}^{2}) & =  \int_{-\infty}^{\infty} x^2 \frac{1}{2}e^{-|x|} \, dx \\ 
+                    & = \frac{1}{2} \left[\int_{-\infty}^{0} x^2 e^{-(-x)} \, dx + \int_{0}^{\infty} x^2 e^{-(x)} \, dx \right] \\ 
+                    & = \frac{1}{2} \left[\int_{-\infty}^{0} x^2 e^{(x)} \, dx + \int_{0}^{\infty} x^2 e^{-(x)} \, dx \right] \\ \nonumber
+                    & = \frac{1}{2} \left[2+2 \right] \\ 
+                    & = 2. 
+			\end{align}
+		Entonces: 
+		 \begin{align}
+      \mathbb{V}(X)  & = \espe{X^{2}} - \espe{X}^{2})\\
+        & = 2 - (0)^2 \\ 
+                & = 2 - 0 \\
+                & = 2. 
+    \end{align}
    
 \newpage
 \bibliographystyle{plain}
