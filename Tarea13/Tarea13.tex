@@ -164,9 +164,9 @@ Para resolver este ejercicio se realiza el programa \ref{cod:1} en lenguaje R \c
 \section{Aplicación en la estimación de subconjuntos en un método estocástico de ramificación y poda } 
  En \cite{norkin1998branch}, se propone un método estocástico de ramificación y poda para resolver problemas de optimización global estocástica. Como en el caso determinista, el conjunto factible se divide en subconjuntos compactos. Para guiar el proceso de partición, el método utiliza estimaciones estocásticas superior e inferior del valor óptimo de la función objetivo en cada subconjunto. Y se demuestra la convergencia del método y se obtienen estimaciones de precisión aleatorias. Se discuten los métodos para construir límites estocásticos superior e inferior a través de la ley de los grandes números. Las consideraciones teóricas la ilustran con un ejemplo de un problema de ubicación de instalaciones.
  
-En el método estocástico de ramificación y poda \cite{norkin1998branch} se construye una secuencia de conjuntos $X^{k}(\omega) \subset X^{k-1}(\omega)$, y se tiene que estimar el valor de cota inferior $L(\cdot)$ en el límite que establece $X^{\ast} =\lim_k X(\omega)$, usando observaciones independientes de variables aleatorias $\epsilon (X^k)$ tales que $\espe{\epsilon (X^k)}=L(X^{k})$. A tal efecto, en\cite{norkin1998branch} se utiliza la siguiente estimación:
+En el método estocástico de ramificación y poda \cite{norkin1998branch} se construye una secuencia de conjuntos $X^{k}(\omega) \subset X^{k-1}(\omega)$, y se tiene que estimar el valor de cota inferior $L(\cdot)$ en el límite que establece $X^{\ast} =\lim_k X(\omega)$, usando observaciones independientes de variables aleatorias $\xi (X^k)$ tales que $\espe{\xi(X^k)}=L(X^{k})$. A tal efecto, en\cite{norkin1998branch} se utiliza la siguiente estimación:
 \begin{equation}
-    L_k(X^k)= \frac{1}{k}\sum_{s=1}^[k] \to L(X^{\ast}).
+    L_k(X^k)= \frac{1}{k}\sum_{s=1}^{k}\xi(X^k) \to L(X^{\ast}).
 \end{equation}
 \newpage
 \bibliographystyle{plain}
