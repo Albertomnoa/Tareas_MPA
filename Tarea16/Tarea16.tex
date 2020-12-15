@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath,amssymb,amscd,amsthm}
+%\usepackage{verbatim}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage[margin=3cm,twoside]{geometry} 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\usepackage{fancyvrb}
+\usepackage{enumerate}
+\newcommand\ql{\textquotedblleft}
+\newcommand\qr{\textquotedblright}
+
+
+\newcommand\E{\ensuremath{\mathbb{E}}}
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\renewcommand{\P}{\ensuremath{\mathbb{P}}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+
+\newcommand\Om{\ensuremath{\Omega}}
+\newcommand{\w}{\ensuremath{\omega}}
+
+\newcommand\var[1]{\, \mathrm{Var} \left( #1 \right)}
+
+\newcommand\pr[1]{\, \mathbb{P} \left( #1 \right)}
+
+\newcommand\cov[1]{\, \mathrm{Cov} \left( #1 \right)}
+
+\newcommand\espe[1]{\, \mathbb{E} \lbrack #1 \rbrack}
+
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+	%
+	frame=lines,  % top and bottom rule only
+	framesep=2em, % separation between frame and text
+	rulecolor=\color{mygreen},
+	%
+	label=\fbox{\color{black} prueba.txt},
+	labelposition=topline,
+	%
+	commandchars=\|\(\), % escape character and argument delimiters for
+	% commands within the verbatim
+	%commentchar=*        % comment character
+}
+\renewcommand{\theenumi}{\roman{enumi}}
+\newtheorem{teor}{Teorema}
+\makeatother
+ \title{Tarea 16 de Modelos Probabilistas Aplicados}
+\subtitle{Retroalimentación de propuestas para el proyecto final}
+\author{5271}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section{Propuesta Alberto Benavides}
+\textit{Motivado por el interés de avanzar en mi tema de tesis, esta primera propuesta consiste en encontrar las relaciones entre dos series de tiempo, una de contaminantes del aire y otra de afecciones del sistema respiratorio, ambas de algún rango de tiempo perteneciente a la última década. El estudio de las relaciones entre estas series se abordaría mediante correlaciones y una técnica conocida como \emph{Dynamic time warping} a partir de retrasos de tiempo entre las series.} 
+\paragraph{Retroalimentación:}
+Este tema es bastante interesante debido al impacto social de la contaminación, el método deformación dinámica del tiempo (DTW) lo había visto en algoritmo de reconocimiento de voz y  sería muy interesante verlo en tu trabajo esto sería un gran aporte.
+
+\section{Propuesta de Gerardo Palafox}
+\textit{The problem of finding clusters or communities in graphs is omnipresent in data mining [Alamgir and von Luxburg, 2010]. Several approaches to finding these communities involve the use of probabilistic models, such as random walks [Alamgir and von Luxburg, 2010, Pons and Latapy, 2005, Lambiotte et al., 2014, Zhang et al., 2018] or stochastic block models [Schaub and Peel, 2020]. In these project, the goal is to implement some of these methods in real world networks [Leskovec and Krevl, 2014].}  
+
+\paragraph{Retroalimentación:} El tema está muy interesante ya que la detección de comunidades ha demostrado ser valiosa en una serie de campos, por ejemplo, biología, ciencias sociales, bibliometría, además esta presentado de manera muy concreta y con sus respectivas referencias teóricas. Me parece una  muy buena propuesta.
+\section{Propuesta de Joaquin Arturo Velarde Moreno }
+\textit{Las empresas necesitan tomar préstamos en el extranjero en dólares, por ello necesitan tener una idea del nivel de depreciación del peso a largo plazo, que les permita valorar el riesgo de tomar estos préstamos, para ello se va a hacer una regresión lineal con el objetivo de calcular el valor del dólar a 15 años, basándonos en los datos de los últimos 40 años dados por el banco de México.} 
+\paragraph{Retroalimentación}
+ Me parece muy interesante, sobre todo en la situación de incertidumbre actual y me parece que sería conveniente mencionar que factores vas a tener en cuenta en el análisis, como podrían ser la inflación interna  y externa, la  tasa de interés interna y externa, las reservas internacionales, el circulante monetario y la actividad industrial entre otros.
+
+
+
+\end{document}
+
