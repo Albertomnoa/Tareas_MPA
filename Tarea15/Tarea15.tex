@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath,amssymb,amscd,amsthm}
+%\usepackage{verbatim}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage[margin=3cm,twoside]{geometry} 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\usepackage{fancyvrb}
+\usepackage{enumerate}
+\newcommand\ql{\textquotedblleft}
+\newcommand\qr{\textquotedblright}
+
+
+\newcommand\E{\ensuremath{\mathbb{E}}}
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\renewcommand{\P}{\ensuremath{\mathbb{P}}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+
+\newcommand\Om{\ensuremath{\Omega}}
+\newcommand{\w}{\ensuremath{\omega}}
+
+\newcommand\var[1]{\, \mathrm{Var} \left( #1 \right)}
+
+\newcommand\pr[1]{\, \mathbb{P} \left( #1 \right)}
+
+\newcommand\cov[1]{\, \mathrm{Cov} \left( #1 \right)}
+
+\newcommand\espe[1]{\, \mathbb{E} \lbrack #1 \rbrack}
+
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+	%
+	frame=lines,  % top and bottom rule only
+	framesep=2em, % separation between frame and text
+	rulecolor=\color{mygreen},
+	%
+	label=\fbox{\color{black} prueba.txt},
+	labelposition=topline,
+	%
+	commandchars=\|\(\), % escape character and argument delimiters for
+	% commands within the verbatim
+	%commentchar=*        % comment character
+}
+\renewcommand{\theenumi}{\roman{enumi}}
+\newtheorem{teor}{Teorema}
+\makeatother
+ \title{Tarea 15 de Modelos Probabilistas Aplicados}
+\subtitle{Propuestas para el proyecto final}
+\author{5271}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section{Diseño de experimento para el problema de empaquetamiento óptimo de politopos definidos por sus vértices}
+Como parte de mi trabajo de tesis de maestría y que doy continuidad en el doctorado se realizó un modelo de programación no lineal para el empaquetamiento de politopos definidos por sus vértices. Se quiere realizar un diseño de experimento para ver qué factores influyen en la calidad de las soluciones obtenidas hasta el momento. Los factores de control son:
+\begin{itemize}
+    \item Cantidad de elementos a empaquetar con once niveles (5, 6, 7, 8, 9, 10, 15, 20, 25, 30)
+    \item Tipo de contenedor con cuatro niveles (circular, sección circular, esférico, cilíndrico) 
+    \item Tipo de figuras a empacar con siete niveles (triángulos, rectángulos, cuadrados, cuadriláteros mixtos, pentágonos, hexágonos y tetraedros)
+    \item Dimensiones con dos niveles (2D y 3D)
+\end{itemize}
+\section{Simulación de soluciones para instancias grandes }
+Realizar un análisis de los resultados anteriormente mencionados, que nos permitan encontrar un modelo para simular soluciones de instancias grades (más de 300 elementos). Con esto se pretende saber cómo se podría comportar el modelo en instancias que no se han podido probar por la complejidad de este en su versión actual.     
+\section{Inferencia y estadísticas bayesianas para la imputación de datos en \textit{datasets}}
+Los datos faltantes son problemas muy comunes encontrados en los \textit{datasets} de la vida real, estos pueden perturbar el análisis de datos dado que disminuyen el tamaño de las muestras y en consecuencia la potencia de las pruebas de contraste de hipótesis, además hace que no se puedan utilizar directamente técnicas y modelos de \textit{machine learning y deep learning} entre otros. Los anterior nos lleva a la necesidad de rellenar o imputar datos en \textit{datasets}, existen diversas técnicas para lograr este objetivo como la sustitución por la media, la sustitución por constante, imputación por regresión, entre otras. Dichas técnicas tienen ciertas deficiencias, por lo que en este trabajo se utilizará la estadística inferencial y bayesiana para la imputación flexible de datos faltantes en algunos \textit{datasets}.     
+\newpage
+\bibliographystyle{plain}
+\bibliography{Biblio}
+
+\end{document}
+
